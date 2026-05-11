@@ -1,44 +1,56 @@
 package com.example.bookaroomapp.ui.screen
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.Text
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.bookaroomapp.model.Room
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.bookaroomapp.ui.component.RoomCard
 
 @Composable
-fun RoomCatalogScreen(modifier: Modifier = Modifier) {
-    // Mengambil data dummy dari model Room
-    val rooms = Room.dummyRoom
+fun RoomCatalogScreen(
+    modifier: Modifier = Modifier,
+    viewModel: RoomViewModel = viewModel() // Inject ViewModel
+) {
+    val uiState by viewModel.uiState.collectAsState()
 
-    // LazyVerticalGrid akan otomatis menyusun kartu ke samping lalu ke bawah (seperti grid)
-    LazyVerticalGrid(
-        columns = GridCells.Adaptive(minSize = 140.dp),
-        contentPadding = PaddingValues(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        modifier = modifier.fillMaxSize()
-    ) {
-        items(rooms) { room ->
-            RoomCard(room = room)
-        }
+    // Trigger pemanggilan API saat pertama kali layar dibuka
+    LaunchedEffect(Unit) {
+        // PERHATIAN: Masukkan Token JWT Anda yang valid di sini untuk percobaan
+        viewModel.getRooms("TOKEN_JWT_DARI_LOGIN")
     }
-}
 
-@Composable
-@Preview
-fun RoomCatalogScreenPreview() {
-    // Sebaiknya gunakan BookaRoomAppTheme jika Anda sudah memilikinya,
-    // Jika belum, MaterialTheme bawaan sudah cukup.
-    MaterialTheme {
-        RoomCatalogScreen()
+    Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        when (val state = uiState) {
+            is RoomUiState.Loading -> {
+                CircularProgressIndicator() // Menampilkan loading spinner
+            }
+            is RoomUiState.Error -> {
+                Text(
+                    text = state.message,
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
+            is RoomUiState.Success -> {
+                LazyVerticalGrid(
+                    columns = GridCells.Adaptive(minSize = 140.dp),
+                    contentPadding = PaddingValues(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    items(state.rooms) { room ->
+                        RoomCard(room = room)
+                    }
+                }
+            }
+        }
     }
 }

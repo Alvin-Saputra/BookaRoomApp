@@ -1,4 +1,4 @@
-package com.example.bookaroomapp.model
+package com.example.bookaroomapp.domain.model
 
 class Room(
     val id: Int,

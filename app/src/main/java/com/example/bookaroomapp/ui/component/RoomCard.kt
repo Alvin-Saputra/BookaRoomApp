@@ -19,7 +19,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.bookaroomapp.model.Room
+import com.example.bookaroomapp.domain.model.Room
 
 @Composable
 fun RoomCard(room: Room, modifier: Modifier = Modifier) {
@@ -37,9 +37,7 @@ fun RoomCard(room: Room, modifier: Modifier = Modifier) {
                 contentDescription = "Room Image",
                 contentScale = ContentScale.Crop,
                 placeholder = ColorPainter(Color.LightGray),
-                modifier = Modifier
-
-                    .height(150.dp)
+                modifier = Modifier.height(150.dp)
             )
             // Restoring your Text elements
             Column(modifier = Modifier.padding(8.dp)) {
