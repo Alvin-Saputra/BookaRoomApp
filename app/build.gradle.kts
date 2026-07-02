@@ -66,4 +66,5 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("io.insert-koin:koin-androidx-compose:3.5.3")
+    implementation("androidx.navigation:navigation-compose:2.8.0")
 }

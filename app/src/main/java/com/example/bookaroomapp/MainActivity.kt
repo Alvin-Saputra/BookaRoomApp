@@ -7,11 +7,11 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.bookaroomapp.ui.screen.RoomCatalogScreen
+import com.example.bookaroomapp.ui.navigation.BookaRoomNavigation
+import com.example.bookaroomapp.ui.screen.LoginScreen
 import com.example.bookaroomapp.ui.theme.BookaRoomAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -21,14 +21,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             BookaRoomAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    RoomCatalogScreen(
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    BookaRoomNavigation( modifier = Modifier.padding(innerPadding))
 
-//                    Greeting(
-//                        name = "Android",
-//                        modifier = Modifier.padding(innerPadding)
-//                    )
+//
                 }
             }
         }
@@ -48,7 +43,7 @@ class MainActivity : ComponentActivity() {
 fun GreetingPreview() {
     BookaRoomAppTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            RoomCatalogScreen(
+            LoginScreen(
                 modifier = Modifier.padding(innerPadding)
             )
 

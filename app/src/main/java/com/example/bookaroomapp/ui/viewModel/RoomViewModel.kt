@@ -1,4 +1,4 @@
-package com.example.bookaroomapp.ui.screen
+package com.example.bookaroomapp.ui.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
