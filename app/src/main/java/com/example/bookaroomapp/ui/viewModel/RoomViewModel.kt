@@ -2,7 +2,6 @@ package com.example.bookaroomapp.ui.screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.bookaroomapp.data.remote.network.ApiClient
 import com.example.bookaroomapp.domain.model.Room
 import com.example.bookaroomapp.repository.RoomRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,8 +16,7 @@ sealed class RoomUiState {
     data class Error(val message: String) : RoomUiState()
 }
 
-class RoomViewModel : ViewModel() {
-    private val repository = RoomRepository(ApiClient.instance)
+class RoomViewModel(private val repository: RoomRepository) : ViewModel() {
 
     private val _uiState = MutableStateFlow<RoomUiState>(RoomUiState.Loading)
     val uiState: StateFlow<RoomUiState> = _uiState.asStateFlow()

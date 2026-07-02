@@ -1,4 +1,5 @@
 package com.example.bookaroomapp.data.remote.response
+import com.example.bookaroomapp.domain.model.Room
 import com.google.gson.annotations.SerializedName
 
 data class RoomResponse(
@@ -32,4 +33,21 @@ data class DataItem(
 
 	@field:SerializedName("capacity")
 	val capacity: Int? = null
-)
+){
+	// Tambahkan fungsi ini untuk mapping ke model Domain
+	fun toDomain(): Room {
+		return Room(
+			id = id ?: 0, // Jika id null, beri nilai default 0
+			roomCode = roomCode ?: "",
+			roomName = roomName ?: "",
+			capacity = capacity ?: 0,
+			// Jika facilities null, kembalikan list kosong.
+			// Jika ada item yang null di dalam list, filter agar tidak masuk.
+			facilities = facilities?.filterNotNull() ?: emptyList(),
+			description = description ?: ""
+		)
+	}
+}
+
+
+

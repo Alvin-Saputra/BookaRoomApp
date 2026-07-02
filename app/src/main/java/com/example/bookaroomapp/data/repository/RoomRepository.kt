@@ -9,9 +9,10 @@ class RoomRepository(private val apiService: ApiService) {
         val response = apiService.getRooms("Bearer $token")
         if (response.isSuccessful) {
             // Ambil data dari response dan ubah DTO menjadi model Room
-            return response.body()?.data?.map { it.toDomain() } ?: emptyList()
+            return response.body()?.data?.filterNotNull()?.map { it.toDomain() } ?: emptyList()
         } else {
             throw Exception("Gagal mengambil data: ${response.code()}")
         }
     }
+
 }

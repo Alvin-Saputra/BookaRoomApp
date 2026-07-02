@@ -13,11 +13,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.bookaroomapp.ui.component.RoomCard
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun RoomCatalogScreen(
     modifier: Modifier = Modifier,
-    viewModel: RoomViewModel = viewModel() // Inject ViewModel
+    viewModel: RoomViewModel = koinViewModel() // Inject ViewModel
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
